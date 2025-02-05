@@ -2,6 +2,23 @@ name: Deploy EC2 with CloudFormation (IAM Role)
 
 on:
   workflow_dispatch:  
+    inputs:
+      AWS_REGION:
+        description: "AWS Region (e.g., us-east-1)"
+        required: true
+        default: "us-east-1"
+      
+      VPC_ID:
+        description: "VPC ID where the EC2 instance will be created"
+        required: true
+      
+      SUBNET_ID:
+        description: "Subnet ID where the EC2 instance will be launched"
+        required: true
+      
+      KEY_NAME:
+        description: "EC2 Key Pair Name for SSH access"
+        required: true
 
 jobs:
   deploy:
