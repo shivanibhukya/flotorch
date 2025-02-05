@@ -1,41 +1,17 @@
-name: Deploy EC2 with CloudFormation
+name: Deploy EC2 with CloudFormation (IAM Role)
 
 on:
-  workflow_dispatch:  # Enables manual execution with user input
-    inputs:
-      AWS_REGION:
-        description: "AWS Region to deploy in (e.g., us-east-1)"
-        required: true
-        default: "us-east-1"
-      
-      VPC_ID:
-        description: "VPC ID where the EC2 instance will be created"
-        required: true
-      
-      SUBNET_ID:
-        description: "Subnet ID where the EC2 instance will be launched"
-        required: true
-      
-      KEY_NAME:
-        description: "EC2 Key Pair Name for SSH access"
-        required: true
+  workflow_dispatch:  
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted  
 
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
 
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v2
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ inputs.AWS_REGION }}
-
-      - name: Deploy CloudFormation Stack
+      - name: Deploy CloudFormation Stack 
         run: |
           aws cloudformation deploy \
             --stack-name MyEC2Stack \
@@ -46,4 +22,3 @@ jobs:
                 VpcId=${{ inputs.VPC_ID }} \
                 SubnetId=${{ inputs.SUBNET_ID }} \
             --capabilities CAPABILITY_NAMED_IAM
-
