@@ -19,7 +19,7 @@ pipeline {
         stage('Checkout Code') {
             steps {
                 script {
-                    checkout scm  // Fetch the repository source code
+                    checkout scm  "https://github.com/shivanibhukya/flotorch.git"
                 }
             }
         }
