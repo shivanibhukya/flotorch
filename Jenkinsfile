@@ -19,7 +19,7 @@ pipeline {
         stage('Checkout Code') {
             steps {
                 script {
-                    checkout scm  "https://github.com/shivanibhukya/flotorch.git"
+                    git branch: 'main', url: 'https://github.com/shivanibhukya/flotorch.git'
                 }
             }
         }
@@ -40,7 +40,7 @@ pipeline {
                             SubnetId=${SUBNET_ID} \
                         --capabilities CAPABILITY_NAMED_IAM
 
-                    echo "CloudFormation Stack Deployment Successful!"
+                    echo "✅ CloudFormation Stack Deployment Successful!"
                     '''
                 }
             }
@@ -49,10 +49,10 @@ pipeline {
 
     post {
         success {
-            echo "Pipeline Completed Successfully!"
+            echo "✅ Pipeline Completed Successfully!"
         }
         failure {
-            echo "Pipeline Failed! Check logs for details."
+            echo "❌ Pipeline Failed! Check logs for details."
         }
     }
 }
